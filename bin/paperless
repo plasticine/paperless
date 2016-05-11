@@ -1,0 +1,133 @@
+#!/usr/bin/env osascript -l JavaScript
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _index = __webpack_require__(1);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	ObjC.import('Foundation');
+	ObjC.import('stdlib');
+	ObjC.import('Cocoa');
+
+	var app = Application.currentApplication();
+	app.includeStandardAdditions = true;
+
+	var args = ObjC.deepUnwrap($.NSProcessInfo.processInfo.arguments).slice(4);
+	var exitCode = (0, _index2.default)(app, args);
+	$.exit(exitCode);
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = paperless;
+
+	var _pdfpen = __webpack_require__(2);
+
+	var _pdfpen2 = _interopRequireDefault(_pdfpen);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var exitCode = 0;
+
+	function paperless(app, args) {
+	  // app.displayNotification('The file has been converted',
+	  // { withTitle: 'Success', subtitle: 'Done' })
+
+	  try {
+	    var pdfPenApp = _pdfpen2.default.launch();
+	    _pdfpen2.default.openImage(pdfPenApp);
+	  } catch (error) {
+	    console.log(error);
+	    exitCode = 1;
+	  }
+
+	  return exitCode;
+	}
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.launch = launch;
+	exports.openImage = openImage;
+	function launch() {
+	  var didLaunchApp = $.NSWorkspace.sharedWorkspace.launchAppWithBundleIdentifierOptionsAdditionalEventParamDescriptorLaunchIdentifier('com.smileonmymac.PDFpen', $.NSWorkspaceLaunchAsync | $.NSWorkspaceLaunchAndHide, $.NSAppleEventDescriptor.nullDescriptor, null);
+
+	  if (didLaunchApp) {
+	    return Application('System Events').processes.byName('PDFpen');
+	  };
+
+	  throw new Error('PDFpen application not found!');
+	}
+
+	function openImage(proc, path) {
+	  console.log(proc.menuBars[0].menuBarItems.byName('File'));
+	  proc.menuBars[0].menuBarItems.byName('File').click();
+	}
+
+	exports.default = {
+	  launch: launch,
+	  openImage: openImage
+	};
+
+/***/ }
+/******/ ]);

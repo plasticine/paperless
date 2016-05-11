@@ -1,0 +1,31 @@
+{
+  "name": "paperless",
+  "version": "1.0.0",
+  "description": "Dead trees are bad.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "webpack -c --progress --bail --config config/webpack",
+    "dev": "webpack -c --progress --debug --watch --config config/webpack",
+    "lint": "eslint src --ext .js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plasticine/paperless.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/plasticine/paperless#readme",
+  "dependencies": {
+    "babel-core": "6.4.5",
+    "babel-eslint": "4.1.6",
+    "babel-loader": "6.2.1",
+    "babel-plugin-lodash": "2.0.1",
+    "babel-preset-es2015": "6.3.13",
+    "eslint": "1.10.3",
+    "json-loader": "0.5.4",
+    "lodash": "4.1.0",
+    "source-map-support": "0.4.0",
+    "webpack": "^1.12.12"
+  }
+}
